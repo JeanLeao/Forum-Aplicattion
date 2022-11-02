@@ -1,0 +1,51 @@
+<%- include ('../partials/header.ejs'); %>
+<body>
+    <%- include ('../partials/navbar.ejs'); %>
+    <div class="container">
+        <hr>
+        <h2>Categorias</h2>
+        <a href="/admin/categories/new" class="btn btn-success">Criar Categoria</a>
+        <hr>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID:</th>
+                    <th>TITULO:</th>
+                    <th>SLUG:</th>
+                    <th>ACÕES</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% caty.forEach((category) => { %>
+                <tr>
+                    <th><%=category.id%></th>
+                    <th><%=category.title%></th>
+                    <th><%=category.slug%></th>
+                    <th>
+                        <form action="/admin/categories/edit/<%=category.id%>" method="post" style="display: inline;">
+                        <button class="btn btn-warning">Editar</button>
+                        </form>
+
+                        <form action="/categories/delete/<%=category.id%>" method="post" style="display: inline;" onsubmit="confirmarDelete(event,this)">
+                            <button class="btn btn-danger">Excluir</button>
+                        </form>
+                    </th>
+                </tr>
+
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+<%- include ('../partials/footer.ejs'); %>
+<script>
+    function confirmarDelete(event,form){
+        event.preventDefault();
+        var decision = confirm('Você está prestes a deletar essa categoria tem certeza?');
+        if(decision){
+            form.submit();
+        }
+
+    }
+</script>
